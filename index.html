@@ -119,6 +119,62 @@
     font-size: 12.5px; font-weight: 700; white-space: nowrap;
   }
   .flow-arrow { font-size: 16px; font-weight: 700; }
+
+  /* ── 담당자 롤 배지 ── */
+  .role-a { font-weight: 700; }
+  .role-b { font-weight: 700; }
+  .role-c { font-weight: 700; }
+  .role-lead { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── 멀티턴 대화 ── */
+  .chat-thread {
+    border: 1.5px solid #111;
+    margin: 14px 0 28px;
+    font-size: 13px;
+  }
+  .chat-turn-divider {
+    background: #f0f0f0;
+    padding: 5px 16px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #d0d0d0;
+  }
+  .chat-user {
+    padding: 12px 18px 12px 18px;
+    border-bottom: 1px solid #ececec;
+    line-height: 1.75;
+  }
+  .chat-user-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+    margin-bottom: 5px;
+  }
+  .chat-ai {
+    background: #fafafa;
+    padding: 12px 18px 14px 18px;
+    border-bottom: 1px solid #ececec;
+    line-height: 1.8;
+  }
+  .chat-ai-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+    margin-bottom: 5px;
+  }
+  .chat-thread .chat-ai:last-child,
+  .chat-thread .chat-user:last-child { border-bottom: none; }
+
+  /* 전략 판단 결론 박스 */
+  .strategy-verdict {
+    border: 2px solid #111;
+    padding: 18px 22px;
+    margin: 14px 0 24px;
+    font-size: 13px;
+    line-height: 1.85;
+  }
+  .strategy-verdict-title {
+    font-size: 14px; font-weight: 700;
+    text-decoration: underline; text-underline-offset: 3px;
+    margin-bottom: 12px;
+  }
 </style>
 </head>
 <body>
@@ -565,9 +621,228 @@ CPL: 87,500원 (목표 15,000원 대비 5.8배)
 </div>
 
 
+<!-- ══════════════════════════════════
+     9. 소재별 담당자 분담 운영
+══════════════════════════════════ -->
+<h2>9. 소재별 담당자 분담 운영 (3인 팀 기준)</h2>
+
+<p>캠페인 소재가 여러 개일 때, 한 명이 전부 관리하면 분석 깊이가 얕아진다. <strong>소재 하나당 담당자 한 명</strong>을 고정하고, 각자가 자신의 소재에 대해 AI와 지속적으로 대화를 쌓아가는 구조를 만든다.</p>
+
+<h3>9-1. 담당자 역할 분담표</h3>
+<table>
+  <colgroup><col style="width:80px"><col style="width:120px"><col style="width:200px"><col style="width:180px"><col></colgroup>
+  <thead><tr><th>역할</th><th>담당</th><th>맡는 소재 유형</th><th>주간 제출 내용</th><th>AI 대화 목표</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="role-a">소재 A 담당</span></td>
+      <td>팀원 1</td>
+      <td>권위 소구형<br>(판결문·수치·공신력)</td>
+      <td>소재 A 지표 + 가설 결과</td>
+      <td>"이 메시지 방향이 타겟에게 먹히는가"</td>
+    </tr>
+    <tr>
+      <td><span class="role-b">소재 B 담당</span></td>
+      <td>팀원 2</td>
+      <td>감성·퍼소나형<br>(가맹점주 인터뷰·스토리)</td>
+      <td>소재 B 지표 + 가설 결과</td>
+      <td>"공감 유발이 실제 클릭·전환으로 이어지는가"</td>
+    </tr>
+    <tr>
+      <td><span class="role-c">소재 C 담당</span></td>
+      <td>팀원 3</td>
+      <td>혜택 명시형<br>(금액 계산기·무료 확인)</td>
+      <td>소재 C 지표 + 가설 결과</td>
+      <td>"구체적 이득 제시가 전환을 당기는가"</td>
+    </tr>
+    <tr>
+      <td><span class="role-lead">팀장</span></td>
+      <td>팀장</td>
+      <td>전체 통합 판단</td>
+      <td>3가지 소재 결과 취합</td>
+      <td>"어떤 전략 방향으로 예산을 집중할 것인가"</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>9-2. 각 담당자가 AI를 "학습"시키는 방법</h3>
+<p>AI는 대화 맥락을 기억한다. 처음 대화를 시작할 때 <strong>소재의 배경과 전략 의도를 먼저 설명</strong>해두면, 이후 지표만 올려도 맥락을 이해하고 더 정확한 분석을 내놓는다.</p>
+
+<div class="prompt-box">## [소재 담당자 초기 컨텍스트 설정 — 대화 첫 시작 시 한 번만 입력]
+
+나는 [법인명]의 마케팅팀 소재 B 담당자야.
+우리는 지금 차액가맹금 소송 집단 모집 캠페인을 Meta에서 집행 중이야.
+
+내가 맡은 소재 B는 "감성·퍼소나형"이야.
+가맹점주가 직접 등장해서 억울함을 토로하는 15초 영상이고,
+타겟은 35~55세 가맹점주, 목표는 상담 신청 폼 제출이야.
+
+앞으로 내가 매주 이 소재의 Meta 지표를 올릴 건데,
+매번 다음 세 가지를 분석해줘:
+1. 이번 주 지표가 지난 주 대비 나아졌는지 악화됐는지
+2. 원인이 소재 문제인지 타겟 문제인지 타이밍 문제인지
+3. 다음 주 개선 포인트 1~2개
+
+지금은 배경 설명이고, 지표는 다음 메시지에서 올릴게.</div>
+
+<div class="note">
+  📌 이 초기 컨텍스트를 한 번 세팅해두면 이후 대화가 훨씬 짧아진다. 매번 배경을 다시 설명할 필요 없이 지표만 올려도 된다.<br>
+  📌 <strong>담당자별로 별도의 AI 대화창을 사용하라.</strong> 소재 A, B, C가 하나의 대화에 뒤섞이면 AI가 맥락을 혼동한다. 각자 별도 채팅 스레드를 유지한다.
+</div>
+
+<h3>9-3. 팀장이 3가지 소재를 통합 분석하는 방법</h3>
+<div class="prompt-box">## [팀장 통합 분석 요청 — 매주 화요일]
+
+이번 주 소재 A/B/C 세 가지 집행 결과를 비교해줘.
+
+【소재 A — 권위 소구형】
+CTR: 1.2% / CPL: 87,500원 / 전환: 8건
+
+【소재 B — 감성 퍼소나형】
+CTR: 2.1% / CPL: 38,000원 / 전환: 18건
+
+【소재 C — 혜택 명시형】
+CTR: 1.8% / CPL: 29,000원 / 전환: 24건
+
+전체 예산: 각 230,000원 (총 690,000원)
+목표 CPL: 15,000원 / 목표 주간 전환: 30건
+
+분석 요청:
+1. 세 소재 중 성과 순위와 이유
+2. 지금 예산 배분이 적절한지 — 조정한다면 어떻게
+3. 현재 전략(소재 다양화 테스트) 자체가 맞는 방향인지 판단
+4. 다음 주 집중해야 할 소재와 버려야 할 소재</div>
+
+
+<!-- ══════════════════════════════════
+     10. 반복 대화로 전략 판단하기
+══════════════════════════════════ -->
+<h2>10. AI 반복 대화로 전략을 바꿔야 하는지 판단하기</h2>
+
+<p>AI에게 한 번 물어보고 끝내는 것은 <u>지표 확인</u>에 불과하다. 진짜 가치는 <strong>대화를 이어가면서 표면 지표 뒤의 전략 문제를 끌어내는 것</strong>에 있다. 아래 예시는 팀장이 주간 통합 분석 결과를 받은 후, AI와 계속 대화하며 전략 전환 여부를 결정하는 과정이다.</p>
+
+<div class="note">
+  📌 멀티턴 대화의 핵심 원칙: <strong>각 턴마다 하나의 질문만 한다.</strong> 한 번에 모든 것을 물으면 AI 답변이 산만해진다. 단계적으로 좁혀가는 것이 핵심.
+</div>
+
+<h3>실전 멀티턴 대화 예시 — "전략을 바꿔야 하는가?"</h3>
+<p style="font-size:12.5px; color:#555; margin-bottom:14px;">상황: 차액가맹금 소송 캠페인 3주차. 소재 A/B/C를 모두 집행했으나 CPL 목표(15,000원) 달성에 실패 중. 팀장이 전략 전환 여부를 판단하려 함.</p>
+
+<div class="chat-thread">
+
+  <!-- TURN 1 -->
+  <div class="chat-turn-divider">TURN 1 — 기본 현황 제출</div>
+  <div class="chat-user">
+    <div class="chat-user-label">👤 팀장</div>
+    3주간 차액가맹금 소송 Meta 캠페인 결과야. 분석해줘.<br><br>
+    【소재 A — 권위 소구】 CTR 1.1% / CPL 91,000원 / 총 전환 21건 / 집행 700,000원<br>
+    【소재 B — 퍼소나 영상】 CTR 2.0% / CPL 41,000원 / 총 전환 51건 / 집행 700,000원<br>
+    【소재 C — 혜택 명시】 CTR 1.7% / CPL 32,000원 / 총 전환 65건 / 집행 700,000원<br><br>
+    목표 CPL: 15,000원 / 목표 전환: 주 30건(3주 합산 목표 90건)<br>
+    실제 전환: 137건 → 목표 초과. 그러나 CPL이 전부 목표의 2~6배.
+  </div>
+  <div class="chat-ai">
+    <div class="chat-ai-label">🤖 AI</div>
+    <strong>현황 요약:</strong> 전환 수(137건 vs 목표 90건)는 초과 달성했지만 CPL이 모두 목표 대비 2~6배 높다. 이것은 타겟 품질 문제가 아닌 <u>단가 구조 문제</u>일 가능성이 높다.<br><br>
+    <strong>소재별 순위:</strong> C(혜택 명시) > B(퍼소나) > A(권위 소구) 순으로 효율적. A는 CTR과 CPL 모두 최하위로 지속 집행 명분이 약하다.<br><br>
+    <strong>핵심 관찰:</strong> 전환은 나오고 있다. 즉 "안 팔리는 것"이 아니라 "비싸게 팔리는 것"이다. CPL을 낮추려면 ① 타겟 범위를 좁혀 클릭 품질을 높이거나, ② 랜딩 전환율을 올리거나, ③ 낮은 CPM대를 찾아야 한다. 어느 방향으로 파보고 싶은가?
+  </div>
+
+  <!-- TURN 2 -->
+  <div class="chat-turn-divider">TURN 2 — 원인 좁히기</div>
+  <div class="chat-user">
+    <div class="chat-user-label">👤 팀장</div>
+    랜딩 전환율이 궁금해. 현재 클릭 대비 폼 제출 비율이 소재별로 다른데:<br>
+    A: 3.1% / B: 5.8% / C: 7.2%<br>
+    이게 의미하는 게 뭐야?
+  </div>
+  <div class="chat-ai">
+    <div class="chat-ai-label">🤖 AI</div>
+    <strong>중요한 데이터다.</strong> 소재별 랜딩 전환율이 이렇게 다르다는 것은 소재가 불러오는 사람의 <u>질이 다르다</u>는 뜻이다.<br><br>
+    소재 A(권위 소구)로 온 사람은 클릭은 했지만 실제 상담 의지가 낮다 — "판결 뉴스가 흥미로워서" 클릭한 구경꾼 비율이 높을 것.<br>
+    소재 C(혜택 명시)로 온 사람은 "내 브랜드 반환액 얼마인지 확인하고 싶다"는 강한 동기로 클릭했기 때문에 폼까지 이어진다.<br><br>
+    <strong>결론:</strong> 소재 C는 단순히 CTR이 높은 게 아니라 맞는 사람을 데려오고 있다. 소재 A는 트래픽을 낭비하고 있다. 소재 A 예산을 C로 이동하면 CPL이 즉시 내려갈 수 있다. 이것만으로 충분한가, 아니면 전략 레벨에서 더 큰 문제가 있는지 확인하고 싶은가?
+  </div>
+
+  <!-- TURN 3 -->
+  <div class="chat-turn-divider">TURN 3 — 전략 레벨로 확장</div>
+  <div class="chat-user">
+    <div class="chat-user-label">👤 팀장</div>
+    맞아. 소재 C가 제일 잘 나오는 건 알겠어. 근데 더 큰 질문이 있어. 지금 우리가 Meta에서 "잠재 관심층" 넓게 공략하는 방식인데, 이 전략 자체가 맞는 건지 모르겠어. 경쟁사(도아, YK)는 협의회 MOU 방식으로 특정 브랜드 점주만 직접 공략하거든. 우리도 방향을 바꿔야 하는 거 아닐까?
+  </div>
+  <div class="chat-ai">
+    <div class="chat-ai-label">🤖 AI</div>
+    <strong>핵심을 짚었다.</strong> 지금 두 전략의 본질적 차이를 정리하면:<br><br>
+    <strong>현재 전략 (Meta 광역 공략):</strong> 장점 — 빠른 볼륨, 다양한 브랜드 커버 가능. 단점 — CPL 높음, 리드 품질 불안정, 경쟁 광고에 노출됨.<br>
+    <strong>경쟁사 전략 (협의회 MOU):</strong> 장점 — 특정 브랜드 점주를 통째로 확보, 신뢰 기반, CPL 개념이 없음(MOU 채널). 단점 — 협의회 관계 구축에 시간·네트워크 필요, 브랜드당 1개 로펌만 가능.<br><br>
+    <strong>판단 기준:</strong> 지금 당장 리드가 필요하면 현재 전략 유지+최적화(소재 C 집중). 3개월 이상 보고 지속 가능한 구조를 원하면 협의회 MOU를 병행해야 한다. 이 둘은 배타적이지 않다 — Meta는 단기 리드 파이프라인, MOU는 중기 독점 채널로 역할을 나눌 수 있다. 어느 쪽 리소스가 있는가?
+  </div>
+
+  <!-- TURN 4 -->
+  <div class="chat-turn-divider">TURN 4 — 전략 전환 시뮬레이션</div>
+  <div class="chat-user">
+    <div class="chat-user-label">👤 팀장</div>
+    두 가지를 병행한다고 하면, Meta는 소재 C에 집중하고 MOU는 이디야(3,000점)를 타겟으로 접근하려고 해. 이 조합이 맞아? 리스크는 뭐가 있어?
+  </div>
+  <div class="chat-ai">
+    <div class="chat-ai-label">🤖 AI</div>
+    <strong>조합 자체는 맞다.</strong> Meta 소재 C로 단기 전환을 유지하면서 이디야 협의회 MOU를 중기 레이어로 깔면, 리드 파이프라인이 단절되지 않는다.<br><br>
+    <strong>리스크 3가지:</strong><br>
+    ① <strong>이디야 선점 경쟁:</strong> 이디야는 3,000점 규모로 경쟁사도 노리고 있을 가능성이 높다. MOU 접근이 늦어지면 도아나 YK에 선점당한다. 협의회 대표 접촉은 지금 당장 시작해야 한다.<br>
+    ② <strong>소재 C 포화:</strong> 하나의 소재에 예산을 집중하면 빈도(Frequency)가 올라가 2~3주 안에 성과가 떨어진다. 소재 C 메시지를 유지하되 비주얼·포맷을 변형한 C-2, C-3 버전을 미리 준비해야 한다.<br>
+    ③ <strong>MOU 후 온보딩 부재:</strong> 협의회와 계약 후 점주들에게 "어떻게 소송 참여하는지" 안내하는 전용 랜딩·카카오 채널이 없으면 MOU가 있어도 리드로 전환되지 않는다. 지금 이디야 전용 랜딩이 있는가?
+  </div>
+
+  <!-- TURN 5 -->
+  <div class="chat-turn-divider">TURN 5 — 실행 계획 확정</div>
+  <div class="chat-user">
+    <div class="chat-user-label">👤 팀장</div>
+    이디야 전용 랜딩은 아직 없어. 지금 당장 할 수 있는 것들을 2주 실행 계획으로 정리해줘. 예산은 주 700,000원 유지야.
+  </div>
+  <div class="chat-ai">
+    <div class="chat-ai-label">🤖 AI</div>
+    <strong>2주 실행 계획:</strong><br><br>
+    <strong>[1주차 — 즉시 실행]</strong><br>
+    · Meta: 소재 A 중단, 예산 전액 소재 C로 이동 → 주 700,000원 전부 소재 C 집행<br>
+    · 소재 C-2 제작 지시: 동일 메시지, 비주얼만 다른 버전 1개 (포화 대비)<br>
+    · 이디야 가맹점주협의회 대표 연락처 파악 + 첫 접촉 시도<br>
+    · 이디야 전용 랜딩페이지 기획서 작성 (개발은 2주차)<br><br>
+    <strong>[2주차 — 구조 세팅]</strong><br>
+    · Meta: 소재 C + C-2 A/B 테스트 시작 (각 350,000원)<br>
+    · 이디야 전용 랜딩 개발 완료 + 카카오 오픈채팅방 개설<br>
+    · 이디야 협의회 미팅 진행, MOU 초안 제시<br>
+    · 2주 후 전환 목표: 주 40건 이상 (소재 C 집중으로 CPL 50,000원 이하 목표)<br><br>
+    <u>3주차 리뷰 때 이 계획의 가설 결과를 다시 들고 와라. 그 때 MOU 진척도에 따라 Meta 예산을 올릴지 유지할지 재판단한다.</u>
+  </div>
+
+</div><!-- /chat-thread -->
+
+<div class="strategy-verdict">
+  <div class="strategy-verdict-title">이 대화에서 얻은 것</div>
+  Turn 1에서는 "CPL이 높다"는 사실만 알았다. Turn 5에 이르러서는 <strong>소재 A 중단, 소재 C 집중, 이디야 MOU 병행, 이디야 전용 랜딩 제작</strong>이라는 구체적인 2주 실행 계획이 나왔다.<br><br>
+  이 차이가 <u>한 번 묻고 끝낸 분석</u>과 <u>반복 대화로 파낸 전략 판단</u>의 차이다. AI는 질문이 깊어질수록 더 깊은 답을 준다.
+</div>
+
+<h3>멀티턴 대화 진행 원칙 요약</h3>
+<table>
+  <colgroup><col style="width:100px"><col style="width:200px"><col></colgroup>
+  <thead><tr><th>단계</th><th>질문 방향</th><th>목적</th></tr></thead>
+  <tbody>
+    <tr><td>Turn 1</td><td>지표 제출 + 현황 분석</td><td>무엇이 잘됐고 못됐는지 확인</td></tr>
+    <tr><td>Turn 2</td><td>원인 좁히기</td><td>소재·타겟·랜딩 중 문제 위치 파악</td></tr>
+    <tr><td>Turn 3</td><td>전략 레벨 질문</td><td>현재 방향 자체가 맞는지 판단</td></tr>
+    <tr><td>Turn 4</td><td>대안 시뮬레이션</td><td>전환했을 때 리스크와 기회 확인</td></tr>
+    <tr><td>Turn 5</td><td>실행 계획 확정</td><td>다음 2주 안에 할 것 정리</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  📌 <strong>대화를 끊지 마라.</strong> 새로운 채팅창을 열면 AI가 이전 맥락을 잃는다. 한 주제는 한 대화 스레드 안에서 끝낸다.<br>
+  📌 <strong>Turn 3에서 반드시 전략 질문을 넣어라.</strong> "지금 우리가 하는 방식 자체가 맞는가"라는 질문 없이 끝내면 전술 최적화에만 머무른다. 전략 전환 판단은 이 질문에서 나온다.
+</div>
+
+
 <div class="page-footer">
-  마케팅 AI 분석 운영 가이드 v1.0 &nbsp;|&nbsp; 작성일: 2026-03-02 &nbsp;|&nbsp; 수정 필요 시 팀장 검토 후 버전 업 &nbsp;|&nbsp;
-  <a href="index.html" style="color:#111">← 헬미닥 분석 보고서로 돌아가기</a>
+  마케팅 AI 분석 운영 가이드 v1.1 &nbsp;|&nbsp; 업데이트: 2026-03-02 (소재별 분담·멀티턴 전략 대화 예시 추가) &nbsp;|&nbsp; 수정 필요 시 팀장 검토 후 버전 업
 </div>
 
 </body>
